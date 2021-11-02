@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "122118796300",
+    "project_id": "pml-firebase-khanif",
+    "storage_bucket": "pml-firebase-khanif.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:122118796300:android:61acb6563beed99d88ea29",
+        "android_client_info": {
+          "package_name": "com.khanifzyen.pml_firebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "122118796300-tegmcimco9bn28q4b20cierl5ftlitv7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.khanifzyen.pml_firebase",
+            "certificate_hash": "13f1c064b8e26d774091bb7b68059778de6875b8"
+          }
+        },
+        {
+          "client_id": "122118796300-qm63tlptb20a9erbtlsufus503navget.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApG0k5ww-PWL4J_9WjlpvAFzLPDpwf8i0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "122118796300-qm63tlptb20a9erbtlsufus503navget.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
