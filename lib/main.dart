@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
+import 'package:pml_firebase/app/controllers/auth_controller.dart';
 import 'app/utils/error_screen.dart';
 import 'app/routes/app_pages.dart';
 import 'app/utils/loading_screen.dart';
@@ -13,6 +14,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _initialization = Firebase.initializeApp();
+
+  final authC = Get.put(AuthController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
@@ -28,11 +31,17 @@ class MyApp extends StatelessWidget {
             future: Future.delayed(Duration(seconds: 3)),
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
-                return GetMaterialApp(
-                  debugShowCheckedModeBanner: false,
-                  title: "Chat App",
-                  initialRoute: AppPages.INITIAL,
-                  getPages: AppPages.routes,
+                return Obx(
+                  () => GetMaterialApp(
+                    debugShowCheckedModeBanner: false,
+                    title: "Chat App",
+                    initialRoute: authC.isSkipIntro.isTrue
+                        ? authC.isAuth.isTrue
+                            ? Routes.HOME
+                            : Routes.LOGIN
+                        : Routes.INTRODUCTION,
+                    getPages: AppPages.routes,
+                  ),
                 );
               }
               return SplashScreen();
