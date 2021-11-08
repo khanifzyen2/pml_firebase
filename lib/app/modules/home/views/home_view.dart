@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
+import 'package:pml_firebase/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
 
@@ -8,7 +9,7 @@ class HomeView extends GetView<HomeController> {
   final List<Widget> myChats = List.generate(
     20,
     (index) => ListTile(
-      onTap: () {},
+      onTap: () => Get.toNamed(Routes.CHAT_ROOM),
       leading: CircleAvatar(
         radius: 30,
         backgroundColor: Colors.black26,
@@ -59,7 +60,7 @@ class HomeView extends GetView<HomeController> {
                     borderRadius: BorderRadius.circular(50),
                     color: Colors.red[900],
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () => Get.toNamed(Routes.PROFILE),
                       borderRadius: BorderRadius.circular(50),
                       child: Padding(
                         padding: const EdgeInsets.all(5.0),
@@ -85,7 +86,7 @@ class HomeView extends GetView<HomeController> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.message_rounded),
-        onPressed: () {},
+        onPressed: () => Get.toNamed(Routes.SEARCH),
         backgroundColor: Colors.red[900],
       ),
     );
