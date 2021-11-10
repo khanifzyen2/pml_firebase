@@ -15,7 +15,7 @@ class ChatRoomView extends GetView<ChatRoomController> {
         backgroundColor: Colors.red[900],
         leadingWidth: 100,
         leading: InkWell(
-          onTap: () {},
+          onTap: () => Get.back(),
           borderRadius: BorderRadius.circular(100),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

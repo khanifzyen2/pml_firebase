@@ -43,6 +43,9 @@ class LoginView extends GetView<LoginController> {
                             child: Image.asset(
                               "assets/logo/google.png",
                             )),
+                        SizedBox(
+                          width: 15,
+                        ),
                         Text("Sign In with Google"),
                       ],
                     ),

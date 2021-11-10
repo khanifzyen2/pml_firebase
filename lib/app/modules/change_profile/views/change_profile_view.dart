@@ -17,7 +17,7 @@ class ChangeProfileView extends GetView<ChangeProfileController> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () => Get.back(),
         ),
         actions: [
           IconButton(

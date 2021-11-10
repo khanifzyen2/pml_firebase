@@ -16,7 +16,7 @@ class UpdateStatusView extends GetView<UpdateStatusController> {
         centerTitle: true,
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () {},
+          onPressed: () => Get.back(),
         ),
       ),
       body: Padding(
@@ -24,6 +24,7 @@ class UpdateStatusView extends GetView<UpdateStatusController> {
         child: Column(
           children: [
             TextField(
+              controller: controller.statusC,
               cursorColor: Colors.black,
               decoration: InputDecoration(
                 border: OutlineInputBorder(
