@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pml_firebase/app/routes/app_pages.dart';
 
@@ -9,6 +10,42 @@ class AuthController extends GetxController {
 
   final _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
+
+  Future<void> firstInitialized() async {
+    await autologin().then((value) {
+      if (value) {
+        isAuth.value = true;
+      }
+    });
+
+    await skipIntro().then((value) {
+      if (value) {
+        isSkipIntro.value = true;
+      }
+    });
+  }
+
+  Future<bool> autologin() async {
+    //mengubah isAuth menjadi true => autologin
+    try {
+      final isSignedIn = await _googleSignIn.isSignedIn();
+      if (isSignedIn) {
+        return true;
+      }
+      return false;
+    } catch (err) {
+      return false;
+    }
+  }
+
+  Future<bool> skipIntro() async {
+    //mengubah skipIntro menjadi true;
+    final box = GetStorage();
+    if (box.read("skipIntro") != null || box.read("skipIntro") == true) {
+      return true;
+    }
+    return false;
+  }
 
   Future<void> login() async {
     //Buat fungsi untuk login dengan google
@@ -40,6 +77,13 @@ class AuthController extends GetxController {
         print("USER CREDENTIALS");
         print(userCredential);
 
+        //simpan status user bahwa sudah pernah login dan tidak akan menampilkan introduction kembali.
+        final box = GetStorage();
+        if (box.read("skipIntro") != null) {
+          box.remove("skipIntro");
+        }
+        box.write('skipIntro', true);
+
         isAuth.value = true;
         Get.offAllNamed(Routes.HOME);
       } else {
@@ -51,6 +95,7 @@ class AuthController extends GetxController {
   }
 
   Future<void> logout() async {
+    await _googleSignIn.disconnect();
     await _googleSignIn.signOut();
     Get.offAllNamed(Routes.LOGIN);
   }
