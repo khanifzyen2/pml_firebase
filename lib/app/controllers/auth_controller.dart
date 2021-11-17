@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:pml_firebase/app/routes/app_pages.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class AuthController extends GetxController {
   var isSkipIntro = false.obs;
@@ -10,6 +11,8 @@ class AuthController extends GetxController {
 
   final _googleSignIn = GoogleSignIn();
   GoogleSignInAccount? _currentUser;
+
+  FirebaseFirestore firestore = FirebaseFirestore.instance;
 
   Future<void> firstInitialized() async {
     await autologin().then((value) {
@@ -83,6 +86,19 @@ class AuthController extends GetxController {
           box.remove("skipIntro");
         }
         box.write('skipIntro', true);
+
+        //simpan users ke dalam firestore...
+        CollectionReference users = firestore.collection('users');
+        users.doc(_currentUser!.email).set({
+          "uid": userCredential.user!.uid,
+          "name": _currentUser!.displayName,
+          "email": _currentUser!.email,
+          "photoUrl": _currentUser!.photoUrl,
+          "status": "",
+          "creationTime":
+              userCredential.user!.metadata.creationTime!.toIso8601String(),
+          "updatedTime": DateTime.now().toIso8601String(),
+        });
 
         isAuth.value = true;
         Get.offAllNamed(Routes.HOME);

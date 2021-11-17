@@ -10,57 +10,43 @@ import 'app/utils/splash_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await GetStorage.init();
   runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  final Future<FirebaseApp> _initialization = Firebase.initializeApp();
-
   final authC = Get.put(AuthController(), permanent: true);
 
   @override
   Widget build(BuildContext context) {
+    // return GetMaterialApp(
+    //   debugShowCheckedModeBanner: false,
+    //   title: "Chat App",
+    //   initialRoute: authC.isAuth.isTrue ? Routes.HOME : Routes.LOGIN,
+    //   getPages: AppPages.routes,
+    // );
     return FutureBuilder(
-      future: _initialization,
+      future: Future.delayed(Duration(seconds: 2)),
       builder: (context, snapshot) {
-        if (snapshot.hasError) {
-          return ErrorScreen();
-        }
-
         if (snapshot.connectionState == ConnectionState.done) {
-          // return GetMaterialApp(
-          //   debugShowCheckedModeBanner: false,
-          //   title: "Chat App",
-          //   initialRoute: authC.isAuth.isTrue ? Routes.HOME : Routes.LOGIN,
-          //   getPages: AppPages.routes,
-          // );
-          return FutureBuilder(
-            future: Future.delayed(Duration(seconds: 2)),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                return Obx(
-                  () => GetMaterialApp(
-                    debugShowCheckedModeBanner: false,
-                    title: "Chat App",
-                    initialRoute: authC.isSkipIntro.isTrue
-                        ? authC.isAuth.isTrue
-                            ? Routes.HOME
-                            : Routes.LOGIN
-                        : Routes.INTRODUCTION,
-                    getPages: AppPages.routes,
-                  ),
-                );
-              }
-              return FutureBuilder(
-                future: authC.firstInitialized(),
-                builder: (context, snapshots) => SplashScreen(),
-              );
-            },
+          return Obx(
+            () => GetMaterialApp(
+              debugShowCheckedModeBanner: false,
+              title: "Chat App",
+              initialRoute: authC.isSkipIntro.isTrue
+                  ? authC.isAuth.isTrue
+                      ? Routes.HOME
+                      : Routes.LOGIN
+                  : Routes.INTRODUCTION,
+              getPages: AppPages.routes,
+            ),
           );
         }
-
-        return LoadingScreen();
+        return FutureBuilder(
+          future: authC.firstInitialized(),
+          builder: (context, snapshots) => SplashScreen(),
+        );
       },
     );
   }
