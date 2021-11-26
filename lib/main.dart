@@ -3,9 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:pml_firebase/app/controllers/auth_controller.dart';
-import 'app/utils/error_screen.dart';
 import 'app/routes/app_pages.dart';
-import 'app/utils/loading_screen.dart';
 import 'app/utils/splash_screen.dart';
 
 void main() async {
@@ -20,12 +18,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return GetMaterialApp(
-    //   debugShowCheckedModeBanner: false,
-    //   title: "Chat App",
-    //   initialRoute: authC.isAuth.isTrue ? Routes.HOME : Routes.LOGIN,
-    //   getPages: AppPages.routes,
-    // );
     return FutureBuilder(
       future: Future.delayed(Duration(seconds: 2)),
       builder: (context, snapshot) {
